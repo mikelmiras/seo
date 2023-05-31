@@ -1,0 +1,6 @@
+Gerta daiteken arazoak hainbat dira:
+1- Informazioa era desordenatuan agertuko da: adibidez bi prozesu abiarazten baditugu, lehenengoak 10s behar baditu ezekuzioa bukatzeko eta bigarrenak, aldiz, bakarrik 1s; lehenengoz bigarren programaren output-a agertuko da.
+
+2- Prozesu umearen informazioa galduko da: Ezin izango dugu prozesu baten irteera-egoera jakin
+
+3- Zombie prozesuak agertu daiteke
