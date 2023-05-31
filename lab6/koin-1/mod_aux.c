@@ -68,6 +68,7 @@ int eskuratu_argumentuak(char *agindua_string, char *arg_array[])
   static char buf_agindua_backup[MAX_AGIND_LUZERA];  // irakurritako agindua metatzeko (originala aldatu gabe)
   strcpy(buf_agindua_backup, agindua_string);
   printf("Aginduaren kopia '%s' da\n", buf_agindua_backup);
+
   char *argumentua;
   // argumentu bezala interpretatu behar ez diren karaktereak => bereizleak
   char *arg_bereizleak = " \t;&";

@@ -22,13 +22,17 @@ int main(int argc, char *argv[])
   }
   // prompt-en erabili programaren_izena + "$ "
   sprintf(prompt, "%s$ ", basename(argv[0]));
-
   // Irakurri erabilatzailearen agindua eta prozesatu
   while (irakurri_agindua(prompt, buf_agindua) > 0)
   {
     // puntu honetan sartuz gero, gutxienez karaktere bat irakurri da 
     // Aginduaren argumentuak eskuratu, 'argv' formatuan gordez
-    if (eskuratu_argumentuak(buf_agindua, agindua_arg_formatuan)==0)
+   printf_trace(gurasoa, "Jasotako agindua: %s\n", buf_agindua);
+   int len = strlen(buf_agindua);
+   int konkurrente = *(&buf_agindua[len-1]) == '&';
+   
+   printf_trace(gurasoa, "Konkurrente: %d\n", konkurrente);
+	if (eskuratu_argumentuak(buf_agindua, agindua_arg_formatuan)==0)
     { // argumenturik aurkitu ezean
         printf_trace(gurasoa, "Agindua hutsik\n");
         continue; // while-ren hurrengo interakzioara joan zuzenean
@@ -52,7 +56,8 @@ int main(int argc, char *argv[])
       default: /* gurasoaren kodea */
         pid_umea = fork_emaitza;  // sortutako prozesu umearen pid-a jaso
         printf_trace(gurasoa, "prozesu umea (PID %d) abiatu da\n", pid_umea);
-        pid_finished = waitpid(pid_umea, &status, WNOHANG);    // ume bat bukatu arte zain gelditu
+        if (konkurrente == 1){
+	pid_finished = waitpid(pid_umea, &status, WNOHANG);    // ume bat bukatu arte zain gelditu
         if (pid_finished == -1){
 		errorea_tratatu("Errore bat gertatu da prozesu umea tratatzerakoan");
 	}else{
@@ -61,7 +66,25 @@ int main(int argc, char *argv[])
 		printf_trace(gurasoa, "Atzealdean zegoen prozesu umea (PID %d) bukatu du %d kodearekin\n", pid_umea, WEXITSTATUS(status));
 		}
 	}
+	}else{ // Exekuzio sekuentziala
+	     pid_umea = fork_emaitza;
+pid_finished = wait(&status);    // ume bat bukatu arte zain gelditu
+        if ( pid_finished != pid_umea)
+        { // bukatu den prozesua aurretik sortutakoa ez bada
+          errorea_tratatu("PID %d umearen bukaeraren zain, baina PID %d-koa jaso da",
+                          pid_umea, pid_finished);
+        } else
+        {
+          if (WIFEXITED(status))
+          {        // Jaso itzulera kodea
+              umea_itzulera_kodea = WEXITSTATUS(status);
+              printf_trace(gurasoa,
+                           "prozesu ume bat (PID %d) bukatu da %d itzulera-kodearekin\n",
+                          pid_finished, umea_itzulera_kodea);
+          }
+        }
 
+	}
 	break;
     } // switch
   } // while
