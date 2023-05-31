@@ -4,3 +4,5 @@ Gerta daiteken arazoak hainbat dira:
 2- Prozesu umearen informazioa galduko da: Ezin izango dugu prozesu baten irteera-egoera jakin
 
 3- Zombie prozesuak agertu daiteke
+
+Nota: Roberto, waitpid funtzioa erabili dut pentsatzen nuelako ariketa gauxa konplexuagoa eskatzen zuela eta orain koin-2 egitean ikusi dut ez zela erabili behar 🤦🏽
