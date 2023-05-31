@@ -1,0 +1,1 @@
+printf-ren idazketa pantailan agertzen da liburutegi-funtzioa delako, eta, hortaz; defektuz ezarrita duen irteera-kanala irteera estandarra delako. printf-k beti sarrera estandarretik idatziko du, independenteki zer esaten diogunarekin.

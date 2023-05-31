@@ -1,0 +1,1 @@
+time pi_test_estatikoa 300000000
