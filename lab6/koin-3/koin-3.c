@@ -64,24 +64,24 @@ int main(int argc, char *argv[])
                           pid_finished, umea_itzulera_kodea);
           }
 	}
+	char pid[10];
 	pid_t laguntzaile = fork();
 	switch (laguntzaile){
 	case -1:
 	errorea_tratatu("Errore bat gertatu da laguntzailea sortzen");
 		break;
 	
-	case 0:
+	case 0: 
+		sprintf(pid, "%d", pid_umea);
+		char *args[] = {"laguntzaile", "3", pid, NULL};
 		printf_trace(umea, "Laguntzailea martzan dago...\n");
+		if (execvp(args[0], args) == -1){
+		errorea_tratatu("Laguntzaileak fallatu du\n");
+		}
 		break;
 	default:
 		lag_pid = laguntzaile;
-	char pid[10];
-	sprintf(pid, "%d",pid_umea); 
-	char *args[] = {"laguntzaile", "3",  pid, NULL};
 	printf_trace(gurasoa, "Laguntzailea abiatu da (PID %d)\n", lag_pid);
-	if ( execvp(args[0], args) == -1){
-	errorea_tratatu("Laguntzaileak fallatu du\n");
-	}
         
 	pid_finished = waitpid(-1, &status, WNOHANG);
 	
