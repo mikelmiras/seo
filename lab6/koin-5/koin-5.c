@@ -61,7 +61,11 @@ char pro;
 		char *aldagaia = params;
 		params = strtok(NULL, "=");
 		char *balioa = params;
-	setenv(aldagaia, balioa, 1);
+	if(setenv(aldagaia, balioa, 1)!=0){
+
+	errorea_tratatu("Ezin izan da env aldagaia gorde\n");
+	}
+	printf_trace(gurasoa, "Aldagaia: %s=%s", aldagaia,balioa);
 	sprintf(prompt, "%s$ ", getenv("GONBIDAPEN"));
 	}
 	    continue;
