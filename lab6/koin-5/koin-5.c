@@ -47,6 +47,25 @@ char pro;
     if (strcmp(agindua_arg_formatuan[0], "exit") == 0){
 	    kill(0, 9);
 	    return;
+    }else{
+    if (strcmp(agindua_arg_formatuan[0], "esleitu") == 0){
+    
+	// Aldatu
+	printf_trace(gurasoa, "Esleitu detektado\n%s\n", agindua_arg_formatuan[1]);
+	char *p = agindua_arg_formatuan[1];
+	if (p == NULL){
+	errorea_tratatu("Ez da ingurune aldagairik ezarri\n");
+	}else{
+		char *params;
+		params = strtok(p, "=");
+		char *aldagaia = params;
+		params = strtok(NULL, "=");
+		char *balioa = params;
+	setenv(aldagaia, balioa, 1);
+	sprintf(prompt, "%s$ ", getenv("GONBIDAPEN"));
+	}
+	    continue;
+    }
     }
     fork_emaitza = fork();  // sortu prozesua umea <1>
     switch (fork_emaitza)
